@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dug Then Shelved</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+  <style>
+    /* ---------- Page ---------- */
+    body {
+      background-color: #FFFFFF;
+      color: #1d2224;
+      font-family: Helvetica, Arial, sans-serif;
+      max-width: 820px;
+      margin: 48px auto;
+      padding: 0 20px;
+    }
+
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 40px;
+      line-height: 1.1;
+      margin: 0 0 16px 0;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      line-height: 1.5;
+      max-width: none;
+      margin-bottom: 24px;
+    }
+
+    .salvage-word {
+      color: #1d6b78;
+      font-weight: bold;
+    }
+
+    /* ---------- Legend (made in HTML, not in the chart) ---------- */
+    .legend {
+      font-size: 13px;
+      color: #6b6f70;
+      margin-bottom: 8px;
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid #1d6b78;
+      margin: 0 6px 0 16px;
+      vertical-align: middle;
+    }
+
+    .legend-dot.empty {
+      background-color: white;
+      margin-left: 0;
+    }
+
+    .legend-dot.filled {
+      background-color: #1d6b78;
+    }
+
+    /* ---------- Chart ---------- */
+    #chart svg {
+      display: block;
+      width: 100%;
+      height: auto;
+
+    }
+
+    /* the lines of each row (not the axis lines) */
+    #chart svg > line {
+      stroke: #1d6b78;
+      stroke-width: 2;
+    }
+
+    /* all the dots: a bit bigger */
+    #chart svg > circle {
+      r: 6;
+      fill: #1d6b78;
+    }
+
+    /* every first dot of a row (collection) is empty */
+    #chart svg > circle:nth-of-type(odd) {
+      fill: white;
+      stroke: #1d6b78;
+      stroke-width: 2;
+    }
+
+    /* site names */
+    #chart svg > text {
+      font-size: 13px;
+      fill: #1d2224;
+    }
+
+    /* axis: lighter colours */
+    #chart .domain,
+    #chart .tick line {
+      stroke: #c9c5ba;
+    }
+
+    #chart .tick text {
+      font-size: 12px;
+      fill: #6b6f70;
+    }
+
+    /* ---------- Note ---------- */
+    .note {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #6b6f70;
+      border-top: 1px solid #d9d8d1;
+      padding-top: 16px;
+      margin-top: 24px;
+      max-width: none;
+    }
+  </style>
+</head>
+
+<body>
+<h1>Dug in a hurry & waiting for decades</h1>
+
+  <p class="subtitle">
+  The Smithsonian has thousands of objects categorized as "miscellaneous". The majority of them come from the Libraries and Anthropology collections. In the 1980s, many of the anthropology objects were incorporated into the collection, but they had been dug up decades earlier. Why were there so many sudden excavations around the 1960s? This is <strong>salvage archaeology.</strong> Each line represents all the database objects from one excavation site that meet the salvage archaeology and date criteria explained below.
+  </p>
+
+  <p class="legend">
+    <span class="legend-dot empty"></span>Year collected
+    <span class="legend-dot filled"></span>Year registered
+  </p>
+
+  <div id="chart"></div>
+
+  <p class="note">
+    <strong>Data:</strong> Smithsonian Open Access API
+    <br>
+    Anthropology records with “misc” or "miscellaneous" in the title.
+
+    <br>
+    Objects pertaining to the "salvage archaeology" phenomenon are classified as such if they have "Reservoir" in the "Place" attribute or "River Basin" as the donor.
+    Some collection dates don't have only one year, but a period. In this sense, the excavation date is the last year of the period. The date of incorporation into the collection is the year of the accession date.
+    Each database object is a "lot" that can have multiple real objects (multiple "bits" and "pieces") inside it. The numbers in parentheses are the number of database objects (or "lots") from that excavation site.
+
+  </p>
+
+  <script type="module" src="scripts.js"></script>
+</body>
+</html>
